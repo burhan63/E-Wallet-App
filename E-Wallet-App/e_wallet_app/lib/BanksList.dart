@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hackathone_test/CurvedAppBar.dart';
+import 'package:hackathone_test/Transfertobank.dart';
 
 class BankScreen extends StatefulWidget {
   const BankScreen({super.key});
@@ -18,48 +20,62 @@ class _BankScreenState extends State<BankScreen> {
 
   TextEditingController accountNumberController = TextEditingController();
 
-  void showBankDialog(BuildContext context, String bankName) {
+  void showBankBottomSheet(BuildContext context, String bankName) {
     accountNumberController.clear(); // Clear the input field
-    showDialog(
+    showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Bank: $bankName'),
-          content: TextField(
-            controller: accountNumberController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: 'Enter Account Number',
-              border: OutlineInputBorder(),
-            ),
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Bank: $bankName',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: accountNumberController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Enter Account Number',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(
+                          context); // Close the bottom sheet without saving
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context, {
+                        'bankName': bankName,
+                        'accountNumber': accountNumberController.text
+                      }); // Return bank name and account number
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ],
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog without saving
-              },
-              child: const Text(
-                'Cancel',
-                style: TextStyle(fontFamily: 'Poppins'),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context,
-                    accountNumberController.text); // Return account number
-              },
-              child: const Text(
-                'Submit',
-                style: TextStyle(fontFamily: 'Poppins'),
-              ),
-            ),
-          ],
         );
       },
     ).then((value) {
-      if (value != null && value.isNotEmpty) {
+      if (value != null && value['accountNumber']?.isNotEmpty == true) {
         Navigator.pop(
-            context, value); // Return to TransferToBank with account number
+          context,
+          value, // Return the selected bank details with account number
+        );
       }
     });
   }
@@ -67,32 +83,65 @@ class _BankScreenState extends State<BankScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Select Bank',
-          style: TextStyle(fontFamily: 'Poppins'),
-        ),
-        backgroundColor: Colors.purple,
-      ),
-      body: ListView.builder(
-        itemCount: banks.length,
-        itemBuilder: (context, index) {
-          final bank = banks[index];
-          return ListTile(
-            leading: const Icon(Icons.account_balance),
-            title: Text(
-              bank['name']!,
-              style: const TextStyle(fontFamily: 'Poppins'),
+      //  appBar: const CurvedAppBar(title: 'Transfer To Bank'),
+      appBar: PreferredSize(
+        preferredSize:
+            const Size.fromHeight(100), // Set your desired height here
+        child: AppBar(
+          backgroundColor: const Color(0xFF662AB2),
+          title: const Padding(
+            padding: EdgeInsets.only(left: 30),
+            child: Text(
+              'Transfer to Bank',
+              style: TextStyle(color: Colors.white),
             ),
-            subtitle: Text(
-              'Code: ${bank['code']}',
-              style: const TextStyle(fontFamily: 'Poppins'),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-            onTap: () {
-              showBankDialog(context, bank['name']!);
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TransferToBank(),
+                ),
+              );
             },
-          );
-        },
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: const Color(0xFF662AB2),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(40),
+                  ),
+                ),
+                child: ListView.builder(
+                  itemCount: banks.length,
+                  itemBuilder: (context, index) {
+                    final bank = banks[index];
+                    return ListTile(
+                      leading: const Icon(Icons.account_balance),
+                      title: Text(bank['name']!),
+                      subtitle: Text('Code: ${bank['code']}'),
+                      onTap: () {
+                        showBankBottomSheet(context, bank['name']!);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

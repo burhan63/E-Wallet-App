@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hackathone_test/TranserOptions.dart';
 
 class HomePageView extends StatefulWidget {
@@ -9,28 +10,26 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Section
             SizedBox(
               height: 250,
               child: Stack(
                 children: [
-                  Container(
-                    height: 210,
-                    decoration: const BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
-                      ),
+                  ClipPath(
+                    clipper: CustomClipperPath(),
+                    child: Container(
+                      height: 210,
+                      color: const Color(0xFF662AB2),
                     ),
                   ),
                   Positioned(
@@ -148,7 +147,9 @@ class _HomePageViewState extends State<HomePageView> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           QuickAction(
-                            icon: Icons.swap_horiz,
+                            icon: (Icons.swap_horiz),
+                            color: const Color(0xFF662AB2),
+                            iconcolor: Colors.white,
                             label: 'Transfer',
                             onTap: () {
                               Navigator.push(
@@ -160,15 +161,22 @@ class _HomePageViewState extends State<HomePageView> {
                             },
                           ),
                           QuickAction(
-                              icon: Icons.account_balance_wallet,
+                              icon: FontAwesomeIcons.wallet,
+                              color: Colors.white,
+                              iconcolor: const Color(0xFF662AB2),
                               label: 'Pop Up',
                               onTap: () {}),
-                          QuickAction(
-                              icon: Icons.money,
-                              label: 'Withdraw',
-                              onTap: () {}),
+                          QuickAction1(
+                            imagePath: 'assets/images/withdraw.png',
+                            color: Colors.white,
+                            imageSize: 30,
+                            label: 'Withdraw',
+                            onTap: () {},
+                          ),
                           QuickAction(
                               icon: Icons.more_horiz,
+                              color: const Color(0xFF662AB2),
+                              iconcolor: Colors.white,
                               label: 'More',
                               onTap: () {
                                 showModalBottomSheet(
@@ -307,7 +315,7 @@ class _HomePageViewState extends State<HomePageView> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 15, right: 15),
+                                                    left: 05, right: 15),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -489,38 +497,46 @@ class _HomePageViewState extends State<HomePageView> {
                                                               fontFamily:
                                                                   'Poppins'),
                                                     ),
-                                                    CustCircularAvatar1(
-                                                      radius: 25,
-                                                      backgroundColor:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              242,
-                                                              232,
-                                                              253),
-                                                      icon: Icons.water_drop,
-                                                      iconSize: 25,
-                                                      label: 'Water',
-                                                      textStyle:
-                                                          const TextStyle(
-                                                              fontFamily:
-                                                                  'Poppins'),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 30),
+                                                      child:
+                                                          CustCircularAvatar1(
+                                                        radius: 25,
+                                                        backgroundColor:
+                                                            const Color
+                                                                .fromARGB(255,
+                                                                242, 232, 253),
+                                                        icon: Icons.water_drop,
+                                                        iconSize: 25,
+                                                        label: 'Water',
+                                                        textStyle:
+                                                            const TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins'),
+                                                      ),
                                                     ),
-                                                    CustCircularAvatar1(
-                                                      radius: 25,
-                                                      backgroundColor:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              242,
-                                                              232,
-                                                              253),
-                                                      icon: Icons
-                                                          .shopping_bag_outlined,
-                                                      iconSize: 25,
-                                                      label: 'E-Commerce',
-                                                      textStyle:
-                                                          const TextStyle(
-                                                              fontFamily:
-                                                                  'Poppins'),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10),
+                                                      child:
+                                                          CustCircularAvatar1(
+                                                        radius: 25,
+                                                        backgroundColor:
+                                                            const Color
+                                                                .fromARGB(255,
+                                                                242, 232, 253),
+                                                        icon: Icons
+                                                            .shopping_bag_outlined,
+                                                        iconSize: 25,
+                                                        label: 'E-Commerce',
+                                                        textStyle:
+                                                            const TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins'),
+                                                      ),
                                                     ),
                                                     CustCircularAvatar1(
                                                       radius: 25,
@@ -624,36 +640,38 @@ class _HomePageViewState extends State<HomePageView> {
             // Latest Transactions Section
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Latest Transactions',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+              child: SingleChildScrollView(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Latest Transactions',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'See All',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Text(
+                          'See All',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward,
                           color: Colors.green,
                         ),
-                      ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.green,
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 10),
@@ -675,39 +693,91 @@ class _HomePageViewState extends State<HomePageView> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.white,
-        items: const [
+        selectedItemColor: const Color(0xFF662AB2),
+        unselectedItemColor: Colors.grey,
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: Colors.grey,
+            icon: Container(
+              decoration: BoxDecoration(
+                color: _currentIndex == 0
+                    ? const Color(0xFF662AB2)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(50),
               ),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.ballot_rounded,
-                color: Colors.grey,
+              child: Icon(
+                Icons.swap_horiz,
+                color: _currentIndex == 0 ? Colors.white : Colors.grey,
               ),
-              label: 'Report'),
+            ),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add,
-                color: Colors.purple,
+            icon: Container(
+              decoration: BoxDecoration(
+                color: _currentIndex == 1
+                    ? const Color(0xFF662AB2)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(50),
               ),
-              label: 'QR Code'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.wallet,
-                color: Colors.grey,
+              child: Icon(
+                FontAwesomeIcons.fileLines,
+                color: _currentIndex == 1 ? Colors.white : Colors.grey,
               ),
-              label: 'History'),
+            ),
+            label: 'Report',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
+            icon: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: const Color(0xFF662AB2),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: const Icon(
+                Icons.qr_code_scanner,
+                size: 36,
+                color: Colors.white,
+              ),
+            ),
+            label: 'QR Code',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              decoration: BoxDecoration(
+                color: _currentIndex == 3
+                    ? const Color(0xFF662AB2)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Icon(
+                Icons.history,
+                color: _currentIndex == 3 ? Colors.white : Colors.grey,
+              ),
+            ),
+            label: 'History',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              decoration: BoxDecoration(
+                color: _currentIndex == 4
+                    ? const Color(0xFF662AB2)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Icon(
                 Icons.person,
-                color: Colors.grey,
+                color: _currentIndex == 4 ? Colors.white : Colors.grey,
               ),
-              label: 'Profile'),
+            ),
+            label: 'Profile',
+          ),
         ],
       ),
     );
@@ -741,13 +811,57 @@ class _HomePageViewState extends State<HomePageView> {
 class QuickAction extends StatelessWidget {
   final IconData icon;
   final String label;
+  final Color color;
+  final Color iconcolor;
   final VoidCallback onTap;
 
-  const QuickAction({
+  const QuickAction(
+      {super.key,
+      required this.icon,
+      required this.label,
+      required this.onTap,
+      required this.color,
+      required this.iconcolor});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                  color: color, borderRadius: BorderRadius.circular(50)),
+              child: Icon(
+                icon,
+                color: iconcolor,
+              )),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, color: Colors.black),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class QuickAction1 extends StatelessWidget {
+  final String imagePath;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+  final double imageSize;
+
+  const QuickAction1({
     super.key,
-    required this.icon,
+    required this.imagePath,
     required this.label,
     required this.onTap,
+    required this.color,
+    this.imageSize = 30,
   });
 
   @override
@@ -757,8 +871,21 @@ class QuickAction extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: Colors.black),
-          const SizedBox(height: 5),
+          Container(
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: ClipOval(
+              child: Image.asset(
+                imagePath, // Local image path
+                fit: BoxFit.cover,
+                width: imageSize,
+                height: imageSize,
+              ),
+            ),
+          ),
+          const SizedBox(height: 2),
           Text(
             label,
             style: const TextStyle(fontSize: 12, color: Colors.black),
@@ -811,7 +938,10 @@ Widget custListTile(String text, String subtitle, String trailing) {
   return ListTile(
     leading: CircleAvatar(
       backgroundColor: Colors.grey[200],
-      child: const Icon(Icons.send, color: Colors.purple),
+      child: const Icon(
+        Icons.swap_horiz,
+        color: Color(0xFF662AB2),
+      ),
     ),
     title: Text(
       text,
@@ -863,4 +993,46 @@ Widget CustCircularAvatar1({
       ),
     ],
   );
+}
+
+class CustomClipperPath extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    // Start at the bottom left corner
+    path.lineTo(0, size.height);
+
+    // First curve
+    path.quadraticBezierTo(
+      size.width / 4, // Control point to shape the curve
+      size.height - 30, // Control point below the bottom to make curve upwards
+      size.width / 2, // End point of the curve (middle of the container)
+      size.height, // Ending at the bottom center
+    );
+
+    // Second curve
+    path.quadraticBezierTo(
+      size.width * 3 / 4, // Control point to shape the curve
+      size.height - 30, // Control point below the bottom to make curve upwards
+      size.width, // Ending at the right corner
+      size.height, // Ending at the bottom right corner
+    );
+
+    // Go to top right corner
+    path.lineTo(size.width, 0);
+
+    // Go back to top left corner
+    path.lineTo(0, 0);
+
+    // Close the path
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
+  }
 }

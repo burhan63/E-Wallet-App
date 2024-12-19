@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hackathone_test/CurvedAppBar.dart';
 import 'package:intl/intl.dart';
 
 class Transctionscreen extends StatelessWidget {
@@ -15,199 +14,184 @@ class Transctionscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime now = DateTime.now();
-    final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-    final DateFormat timeFormat = DateFormat('hh:mm a');
-    final String date = dateFormat.format(now);
-    final String time = timeFormat.format(now);
+    final String formattedDate = DateFormat('MMMM dd, yyyy').format(now);
+    final String formattedTime = DateFormat('hh:mm a').format(now);
 
     return Scaffold(
-      appBar: const CurvedAppBar(title: "Transction SucessFull"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Center(
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                      size: 60,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Success! Your transaction has been completed.',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              // Transferred Amount and Phone Number
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'Transferred Amount: Rp $amount',
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                          fontFamily: 'Poppins'),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'To: $phoneNumber',
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black54,
-                          fontFamily: 'Poppins'),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              // Transaction Details Section
-              const Text(
-                'Transaction Details',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontFamily: 'Poppins'),
-              ),
-              const SizedBox(height: 10),
-              Card(
-                elevation: 5,
-                shadowColor: Colors.grey.withOpacity(0.2),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: const Color(0xFF662AB2),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 60.0, left: 16.0, right: 16.0, bottom: 16.0),
+              child: Column(
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.topCenter,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Date:',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                                fontFamily: 'Poppins'),
-                          ),
-                          Text(
-                            date,
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black54,
-                                fontFamily: 'Poppins'),
-                          ),
-                        ],
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 10),
+
+                            // Success Message
+                            const Text(
+                              'Transfer Successful',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+
+                            // Amount Display
+                            Text(
+                              'Rp $amount',
+                              style: const TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+
+                            // Transaction Status
+                            const Text(
+                              'Your transaction was successful!',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Sender Information
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.purple,
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      phoneNumber,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Transaction Details Section
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                children: [
+                                  _buildDetailRow('Payment', 'Rp $amount'),
+                                  _buildDetailRow('Date', formattedDate),
+                                  _buildDetailRow('Time', formattedTime),
+                                  _buildDetailRow(
+                                      'Reference Number', 'QQW-6789'),
+                                  _buildDetailRow('Fee', 'Rp 0'),
+                                  const Divider(thickness: 1),
+                                  _buildDetailRow(
+                                    'Total Payment',
+                                    'Rp $amount',
+                                    isBold: true,
+                                    color: Colors.purple,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Time:',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                                fontFamily: 'Poppins'),
+                      // Tick icon positioned above the container
+                      const Positioned(
+                        top: -40, // Moves the tick icon above the container
+                        child: CircleAvatar(
+                          radius: 40,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.check_circle,
+                            size: 70,
+                            color: Colors.green,
                           ),
-                          Text(
-                            time,
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black54,
-                                fontFamily: 'Poppins'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Amount:',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                                fontFamily: 'Poppins'),
-                          ),
-                          Text(
-                            'Rp $amount',
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black54,
-                                fontFamily: 'Poppins'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Total Payment:',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                                fontFamily: 'Poppins'),
-                          ),
-                          Text(
-                            'Rp $amount', // Assuming total payment is equal to the amount
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black54,
-                                fontFamily: 'Poppins'),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(height: 30),
 
-              // Action Buttons (Back to Home and Share)
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                  const SizedBox(height: 20),
+
+                  // Share Button
                   SizedBox(
-                    width: double
-                        .infinity, // This makes the button take full width
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context); // Back to previous screen
+                        // Share functionality
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 80, vertical: 15),
+                        backgroundColor: Colors.transparent,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          side: const BorderSide(
+                            color:
+                                Colors.white, // Set the border color to white
+                            width: 2, // Set the border width
+                          ),
+                        ),
+                      ),
+                      child: const Text(
+                        'Share',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Back to Home Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        side: const BorderSide(color: Colors.white),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -215,44 +199,43 @@ class Transctionscreen extends StatelessWidget {
                       child: const Text(
                         'Back to Home',
                         style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins'),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20), // Space between the buttons
-                  SizedBox(
-                    width: double
-                        .infinity, // This makes the button take full width
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Implement share functionality here
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 80, vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF662AB2),
                         ),
-                      ),
-                      child: const Text(
-                        'Share',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins'),
                       ),
                     ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  // Transaction Detail Row
+  Widget _buildDetailRow(String title, String value,
+      {bool isBold = false, Color? color}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 14, color: Colors.grey),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              color: color ?? Colors.black,
+            ),
+          ),
+        ],
       ),
     );
   }

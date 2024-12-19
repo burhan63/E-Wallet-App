@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hackathone_test/CurvedAppBar.dart';
 import 'package:hackathone_test/DashboardScreen.dart';
 import 'package:hackathone_test/SignUpScreen.dart';
+import 'package:hackathone_test/testing.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -66,148 +67,187 @@ class _LoginScreenState extends State<LoginScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: const CurvedAppBar(title: ''),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 150,
+            color: const Color(0xFF662AB2),
+          ),
+          Expanded(
+            child: Stack(
+              clipBehavior: Clip.none,
               children: [
-                const Center(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 50,
-                    child: Icon(
-                      Icons.wallet,
-                      color: Colors.purple,
-                      size: 50,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Center(
-                  child: Text(
-                    'EasyWallet App',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-
-                // Input Fields
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextField(
-                        controller: emailcontroller,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'E.g: example@gmail.com',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          suffixIcon: const Icon(Icons.email),
-                        ),
+                Positioned(
+                  top: -50,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(40),
                       ),
-                      const SizedBox(height: 15),
-                      TextField(
-                        controller: passwordcontroller,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          suffixIcon: const Icon(Icons.lock),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                // Buttons
-                Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: screenWidth * 0.8,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            login(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          child: const Text(
-                            'Login',
-                            style:
-                                TextStyle(fontSize: 16, fontFamily: 'Poppins'),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: screenWidth * 0.8,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SignupView(),
+                    ),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Center(
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 50,
+                                  child: Icon(
+                                    Icons.wallet,
+                                    color: Color(0xFF662AB2),
+                                    size: 50,
+                                  ),
+                                ),
                               ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          child: const Text(
-                            'Signup',
-                            style:
-                                TextStyle(fontSize: 16, fontFamily: 'Poppins'),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Center(
+                                child: Text(
+                                  'EasyWallet App',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              // Input Fields
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextField(
+                                      controller: emailcontroller,
+                                      decoration: InputDecoration(
+                                        labelText: 'Email',
+                                        hintText: 'E.g: example@gmail.com',
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        suffixIcon: const Icon(Icons.email),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15),
+                                    TextField(
+                                      controller: passwordcontroller,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                        labelText: 'Password',
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        suffixIcon: const Icon(Icons.lock),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const SizedBox(height: 30),
+
+                              // Buttons
+                              Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      width: screenWidth * 0.8,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          login(context);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xFF662AB2),
+                                          foregroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'Login',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Poppins'),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    SizedBox(
+                                      width: screenWidth * 0.8,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SignupView(),
+                                            ),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xFF662AB2),
+                                          foregroundColor: Colors.white,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'Signup',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Poppins'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
